@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div id="gameResult"></div>
+
+    <script>
+      const rbtn = document.createElement("button");
+      rbtn.textContent = "Rock";
+      const pbtn = document.createElement("button");
+      pbtn.textContent = "Paper";
+      const sbtn = document.createElement("button");
+      sbtn.textContent = "scissors";
+
+      const body = document.querySelector("body");
+      body.append(sbtn);
+      body.append(rbtn);
+      body.append(pbtn);
+
+      sbtn.addEventListener("click", playRound);
+      rbtn.addEventListener("click", playRound);
+      pbtn.addEventListener("click", playRound);
+
+      const results = document.createElement("div");
+      body.append(results);
+
+      let userScore = 0;
+      let computerScore = 0;
+
+      const scores = document.querySelector("#gameResult");
+      scores.textContent = ` ${userScore} + ${computerScore}`;
+
+      function getComputerChoice() {
+        const choices = ["Rock", "Paper", "Scissors"];
+        return choices[Math.floor(Math.random() * choices.length)];
+      }
+
+      function playRound(e) {
+        if (userScore + computerScore == 5) {
+          return;
+        }
+        const playerSelection = e.target.textContent.toLowerCase();
+        const computerSelection = getComputerChoice().toLowerCase();
+        if (playerSelection === computerSelection) {
+          results.textContent = "Tied";
+        } else if (
+          playerSelection === "rock" &&
+          computerSelection === "scissors"
+        ) {
+          userScore++;
+          results.textContent = "You win!rock beats scissors";
+        } else if (
+          playerSelection === "scissors" &&
+          computerSelection === "paper"
+        ) {
+          userScore++;
+          results.textContent = "You win!scissors beats Paper";
+        } else if (
+          playerSelection === "paper" &&
+          computerSelection === "rock"
+        ) {
+          userScore++;
+          results.textContent = "You win!paper beats Rock";
+        } else {
+          computerScore++;
+          results.textContent = `You lose ${computerSelection} beat ${playerSelection}`;
+        }
+        scores.textContent = ` ${userScore} + ${computerScore}`;
+        if (userScore >= 3) {
+          alert("Yay you won");
+        } else if (computerScore >= 3) {
+          alert("You Lost");
+        }
+      }
+    </script>
+  </body>
+</html>
